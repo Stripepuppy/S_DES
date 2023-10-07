@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at the highest level of quality.">
+    <meta name="author" content="Webpixels">
+    <title>Boomerang UI Kit - Free Bootstrap Framework by Webpixels</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
+<!-- Theme CSS -->
+<link type="text/css" href="{{ url_for('static', filename='css/theme.css') }}" rel="stylesheet">
+<!-- Demo CSS - No need to use these in your project -->
+<link type="text/css" href="{{ url_for('static', filename='css/demo.css') }}" rel="stylesheet">
+
+</head>
+<body>
+    <!-- ... [现有的导航栏代码] -->
+    <!-- 导航栏开始 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">S-DES</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/binary">Binary</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/">String</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- 导航栏结束 -->
+
+
+    <!-- 新添加的S-DES加密部分 -->
+    <main class="main">
+        <section class="py-xl bg-cover bg-size--cover" style="background-image: url('static/images/backgrounds/img-1.jpg')">
+            <span class="mask bg-primary alpha-6"></span>
+            <div class="container d-flex align-items-center no-padding">
+                <div class="col">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="heading h3 pt-3 pb-5">Encrypt with S-DES</h4>
+                                    <form id="encrypt-form" action="/encrypt_string" method="POST">
+                                        <div class="form-group">
+                                            <label for="plaintext-encrypt">Plaintext:</label>
+                                            <input type="text" class="form-control" id="plaintext-encrypt" name="plaintext">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="key-encrypt">Key (10 bits):</label>
+                                            <input type="text" class="form-control" id="key-encrypt" name="key" maxlength="10">
+                                        </div>
+                                        <button type="submit" class="btn btn-block btn-lg bg-primary mt-4 text-white">Encrypt</button>
+                                    </form>
+                                    <h5 class="pt-4">Ciphertext:</h5>
+                                    <p id="ciphertext-output"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="heading h3 pt-3 pb-5">Decrypt with S-DES</h4>
+                                    <form id="decrypt-form">
+                                        <div class="form-group">
+                                            <label for="ciphertext-decrypt">Ciphertext:</label>
+                                            <input type="text" class="form-control" id="ciphertext-decrypt" name="ciphertext">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="key-decrypt">Key (10 bits):</label>
+                                            <input type="text" class="form-control" id="key-decrypt" name="key" maxlength="10">
+                                        </div>
+                                        <button type="submit" class="btn btn-block btn-lg bg-primary mt-4 text-white">Decrypt</button>
+                                    </form>
+                                    <h5 class="pt-4">Decrypted Plaintext:</h5>
+                                    <p id="decrypted-plaintext-output"></p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="heading h3 pt-3 pb-5">Find Possible Keys</h4>
+                                    <form id="brute-force-form">
+                                        <div class="form-group">
+                                            <label for="brute-force-plaintext">Plaintext:</label>
+                                            <input type="text" class="form-control" id="brute-force-plaintext" name="plaintext">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="brute-force-ciphertext">Ciphertext:</label>
+                                            <input type="text" class="form-control" id="brute-force-ciphertext" name="ciphertext">
+                                        </div>
+                                        <button type="submit" class="btn btn-block btn-lg bg-primary mt-4 text-white">Find Possible Keys</button>
+                                    </form>
+                                    <h5 class="pt-4">Possible Keys:</h5>
+                                    <ul id="keys-list"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ... [原有的登录部分代码] -->
+    </main>
+
+    <!-- ... [页脚和JavaScript引入不变] -->
+
+<!-- Core -->
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/popper/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>
+<!-- FontAwesome 5 -->
+<script src="{{ url_for('static', filename='vendor/fontawesome/js/fontawesome-all.min.js') }}" defer></script>
+<!-- Page plugins -->
+<script src="{{ url_for('static', filename='vendor/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/input-mask/input-mask.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/nouislider/js/nouislider.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/textarea-autosize/textarea-autosize.min.js') }}"></script>
+<!-- Theme JS -->
+<script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+
+<script>
+    // 获取表单元素和输出元素
+    const encryptForm = document.getElementById('encrypt-form');
+    const plaintextInput = document.getElementById('plaintext-encrypt');
+    const keyInput = document.getElementById('key-encrypt');
+    const ciphertextOutput = document.getElementById('ciphertext-output');
+
+    // 监听表单提交事件
+    encryptForm.addEventListener('submit', function (e) {
+        e.preventDefault(); // 阻止默认的表单提交行为
+
+        // 获取明文和密钥
+        const plaintext = plaintextInput.value;
+        const key = keyInput.value;
+
+        // 发送 AJAX 请求到加密路由
+        fetch('/encrypt_string', {
+            method: 'POST',
+            body: new URLSearchParams({ plaintext, key }), // 将数据作为表单数据发送
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // 显示加密后的密文
+                ciphertextOutput.textContent = data.ciphertext;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+
+<script>
+        // 使用jQuery的方式监听表单提交事件
+    $("#decrypt-form").submit(function (event) {
+        event.preventDefault(); // 阻止表单默认提交行为
+
+        // 获取用户输入的密文和密钥
+        var ciphertext = $("#ciphertext-decrypt").val();
+        var key = $("#key-decrypt").val();
+
+        // 发送POST请求到服务器解密密文
+        $.post("/decrypt_string", { ciphertext: ciphertext, key: key }, function (data) {
+            // 显示解密后的明文
+            $("#decrypted-plaintext-output").text(data.plaintext);
+        });
+    });
+
+</script>
+
+<script>
+    // 使用jQuery的方式监听暴力破解表单提交事件
+    $("#brute-force-form").submit(function (event) {
+        event.preventDefault(); // 阻止表单默认提交行为
+
+        // 获取用户输入的明文和密文
+        var plaintext = $("#brute-force-plaintext").val();
+        var ciphertext = $("#brute-force-ciphertext").val();
+
+        // 发送POST请求到服务器进行暴力破解
+        $.post("/brute_force_string", { plaintext: plaintext, ciphertext: ciphertext }, function (data) {
+            // 显示可能的密钥列表
+            var keysList = $("#keys-list");
+            keysList.empty(); // 清空列表
+            if (data.keys.length === 0) {
+                keysList.append("<li>No possible keys found.</li>");
+            } else {
+                data.keys.forEach(function (key) {
+                    keysList.append("<li>" + key + "</li>");
+                });
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
