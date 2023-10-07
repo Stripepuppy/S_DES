@@ -3,32 +3,65 @@
 ## 第1关：基本测试
 
 根据S-DES算法编写和调试程序，提供GUI解密支持用户交互。输入可以是8bit的数据和10bit的密钥，输出是8bit的密文。
-<img width="1440" alt="image" src="https://github.com/Stripepuppy/S_DES/assets/133982775/9f222d53-a238-4a10-90ad-b463a0dbdbba">
 
-![image](https://github.com/Stripepuppy/S_DES/assets/133982775/c15fd338-bb46-4ecc-adb5-755da20e0848)
+二进制交互界面
+![image](https://github.com/Stripepuppy/S_DES/assets/133982775/67233e87-850e-4482-9994-5fcca8626355)
 
+明文、密文输入格式错误提示。
+![image](https://github.com/Stripepuppy/S_DES/assets/133982775/339c4f18-13c4-4d76-a336-c8b949fdd2ee)
+
+密钥输入格式错误提示。
+![image](https://github.com/Stripepuppy/S_DES/assets/133982775/db1cfe8c-146f-4a8f-b546-934d6510d3e8)
 
 ## 第2关：交叉测试
 
-考虑到是**算法标准**，所有人在编写程序的时候需要使用相同算法流程和转换单元(P-Box、S-Box等)，以保证算法和程序在异构的系统或平台上都可以正常运行。
+本组二进制明文加密结果。
+![image](https://github.com/Stripepuppy/S_DES/assets/133982775/3d5b6afa-16f1-4d43-aea6-2ba31aa67e4a)
 
-设有A和B两组位同学(选择相同的密钥K)；则A、B组同学编写的程序对明文P进行加密得到相同的密文C；或者B组同学接收到A组程序加密的密文C，使用B组程序进行解密可得到与A相同的P。
+交叉测试组二进制明文加密结果。
+<img width="300" alt="image" src="https://github.com/Stripepuppy/S_DES/assets/133982775/ae60deaf-a928-4567-825b-c255248d8db5">
+
+本组字符串明文加密结果。
+![image](https://github.com/Stripepuppy/S_DES/assets/133982775/1dcaf6fa-16a2-43d5-9ba0-8486972561df)
+
+交叉验证组字符串加密结果。
+<img width="297" alt="image" src="https://github.com/Stripepuppy/S_DES/assets/133982775/f142a77a-6c5e-4655-9c82-0e0222d9ba96">
 
 ## 第3关：扩展功能
 
 考虑到向实用性扩展，加密算法的数据输入可以是ASII编码字符串(分组为1 Byte)，对应地输出也可以是ACII字符串(很可能是乱码)。
 
+字符串交互界面
+![image](https://github.com/Stripepuppy/S_DES/assets/133982775/388fa005-e30d-4bde-8246-ce2f7f755f43)
+
 ## 第4关：暴力破解
 
 使用相同密钥的明、密文对(一个或多个)，可使用暴力破解的方法找到正确的密钥Key。
 
+一对密文和密钥。
+![image](https://github.com/Stripepuppy/S_DES/assets/133982775/31c4812e-d9f0-4373-a163-59e8afb9b676)
+
+多对密文和密钥。（在后台进行测试）
+明文：[00001111, 00010000, 00010001] 密文：[10101101, 00100001, 10011001] 密钥：0001000111
+<img width="512" alt="image" src="https://github.com/Stripepuppy/S_DES/assets/133982775/baf0c1b5-d945-4a66-99b4-09d672e1eb55">
+
 ## 第5关：封闭测试
 
 根据第4关的结果，进一步分析，随机选择的一个明密文对，有不止一个密钥Key
+![image](https://github.com/Stripepuppy/S_DES/assets/133982775/a7fe0004-5986-41c6-be9b-fcbe478705f9)
 
+在进一步的分析中，我们发现：对于不同的10位密钥，只要生成的两个子密钥Km和Kn是相同的，那么使用这两个密钥加密相同的明文将产生相同的密文。
 
+具体来说，我们比较了以下五对密钥生成的子密钥：
 
-进一步扩展，对应明文空间任意给定的明文分组，会出现选择不同的密钥加密得到相同密文的情况
+1. 1000101010 和 1100101010
+2. 1111110011 和 1011110011
+3. 1000000010 和 1100000010
+4. 0011100000 和 0111100000
+5. 0010101101 和 0110101101
+
+总结：当两个10位密钥只有在第2位上存在差异，而其他位都相同时，它们会生成相同的子密钥。这个现象引发了我们对S-DES算法的进一步思考，尤其是子密钥生成的过程。这种情况可能会导致一些安全性问题，因此在使用S-DES时需要格外小心，并确保密钥的随机性和安全性以避免潜在的风险。
+
 
 # S-DES加解密工具开发手册
 
