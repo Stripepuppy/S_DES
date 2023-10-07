@@ -16,6 +16,27 @@
 </head>
 <body>
     <!-- ... [现有的导航栏代码] -->
+
+    <!-- Error Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Input Error</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 导航栏开始 -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <a class="navbar-brand" href="#">S-DES</a>
@@ -145,6 +166,18 @@
         const plaintextBin = plaintextBinInput.value;
         const keyBinary = keyInputBinary.value;
 
+        // 输入验证
+        if (plaintextBin.length !== 8 || !/^[01]+$/.test(plaintextBin)) {
+            document.getElementById('errorMessage').textContent = "Plaintext should be an 8-bit binary string.";
+            $('#errorModal').modal('show');
+            return;
+        }
+        if (keyBinary.length !== 10 || !/^[01]+$/.test(keyBinary)) {
+            document.getElementById('errorMessage').textContent = "Key should be a 10-bit binary string.";
+            $('#errorModal').modal('show');
+            return;
+        }
+
         // 发送 AJAX 请求到加密路由
         fetch('/encrypt_binary', {
             method: 'POST',
@@ -174,6 +207,18 @@
         var ciphertextBin = $("#ciphertext-bin-decrypt").val();
         var keyBinary = $("#key-decrypt-binary").val();
 
+        // 输入验证
+        if (ciphertextBin.length !== 8 || !/^[01]+$/.test(ciphertextBin)) {
+            document.getElementById('errorMessage').textContent = "Ciphertext should be an 8-bit binary string.";
+            $('#errorModal').modal('show');
+            return;
+        }
+        if (keyBinary.length !== 10 || !/^[01]+$/.test(keyBinary)) {
+            document.getElementById('errorMessage').textContent = "Key should be a 10-bit binary string.";
+            $('#errorModal').modal('show');
+            return;
+        }
+
         // 发送POST请求到服务器解密密文
         $.post("/decrypt_binary", { ciphertext_bin: ciphertextBin, key: keyBinary }, function (data) {
             // 显示解密后的明文的二进制表示
@@ -190,6 +235,18 @@
         // 获取明文和密文的二进制表示
         var plaintextBin = $("#brute-force-plaintext-bin").val();
         var ciphertextBin = $("#brute-force-ciphertext-bin").val();
+
+        // 输入验证
+        if (plaintextBin.length !== 8 || !/^[01]+$/.test(plaintextBin)) {
+            document.getElementById('errorMessage').textContent = "Plaintext should be an 8-bit binary string.";
+            $('#errorModal').modal('show');
+            return;
+        }
+        if (ciphertextBin.length !== 8 || !/^[01]+$/.test(ciphertextBin)) {
+            document.getElementById('errorMessage').textContent = "Ciphertext should be an 8-bit binary string.";
+            $('#errorModal').modal('show');
+            return;
+        }
 
         // 发送POST请求到服务器进行暴力破解
         $.post("/brute_force_binary", { plaintext_bin: plaintextBin, ciphertext_bin: ciphertextBin }, function (data) {
