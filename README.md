@@ -3,6 +3,10 @@
 ## 第1关：基本测试
 
 根据S-DES算法编写和调试程序，提供GUI解密支持用户交互。输入可以是8bit的数据和10bit的密钥，输出是8bit的密文。
+<img width="1440" alt="image" src="https://github.com/Stripepuppy/S_DES/assets/133982775/9f222d53-a238-4a10-90ad-b463a0dbdbba">
+
+![image](https://github.com/Stripepuppy/S_DES/assets/133982775/c15fd338-bb46-4ecc-adb5-755da20e0848)
+
 
 ## 第2关：交叉测试
 
